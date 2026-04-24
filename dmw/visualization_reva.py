@@ -143,3 +143,17 @@ if analyze:
 
         fig3 = px.histogram(df, x="NObeyesdad", title="Obesity Levels")
         st.plotly_chart(fig3, use_container_width=True)
+        #theme
+        st.markdown("""
+        <style>
+        .main {
+                background-color: #0e1117;
+            }
+        h1,h2,h3 {
+        color: #ffffff;
+        }
+        .cse-1d391kg {
+            background-color: #111827;
+        }
+        </style>
+        """, unsafe_allow_html=True)
