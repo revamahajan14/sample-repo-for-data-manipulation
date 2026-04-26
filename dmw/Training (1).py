@@ -8,6 +8,7 @@ import joblib
 df = pd.read_csv("cleaned.csv")
 
 # Separate features and target
+features = ['Age','BMI','CH2O','FAF','TUE','Diet_Risk']
 X = df.drop("NObeyesdad", axis=1)   # input features
 y = df["NObeyesdad"]                # target variable
 
@@ -20,7 +21,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # Create and train model
-model = RandomForestClassifier()
+model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
 
 # Make predictions
