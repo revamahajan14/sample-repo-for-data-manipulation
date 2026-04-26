@@ -12,7 +12,8 @@ df = pd.read_csv("cleaned.csv")
 
 st.set_page_config(page_title="Health Analyzer", layout="wide")
 
-st.title("💪 Health & Obesity Analyzer")
+st.title("💪 Obesity Risk Analyzer")
+st.markdown("Analyze how diet and lifestyle affect obesity risk")
 
 # Sidebar inputs
 st.sidebar.header("Enter Your Details")
@@ -21,13 +22,47 @@ age = st.sidebar.number_input("Age", 10, 80, 25)
 height = st.sidebar.number_input("Height (cm)", 130, 220, 170)
 weight = st.sidebar.number_input("Weight (kg)", 30.0, 150.0, 70.0)
 
-faf = st.sidebar.number_input("Activity (0-6)", 0, 6, 2)
-ch2o = st.sidebar.number_input("Water Intake (1-8)", 1, 8, 3)
-tue = st.sidebar.number_input("Screen Time (0-12)", 0, 12, 2)
+faf = st.sidebar.number_input("Activity (0-7)", 0, 6, 2)
+ch2o = st.sidebar.number_input("Water Intake (L)", 1, 6, 3)
+tue = st.sidebar.number_input("Screen Time (0-24)", 0, 24, 2)
+diet_risk = st.sidebar.slider("Diet Risk Score", 0, 10, 4)
 
 analyze = st.sidebar.button("Analyze")
 
 # BMI category function
+
+bmi = weight / (height ** 2)
+
+#layout
+col1, col2 = st.columns(2)
+
+with col1:
+    st.subheader("📋 User Summary")
+    st.write(f"**Age:** {age}")
+    st.write(f"**BMI:** {bmi:.2f}")
+    st.write(f"**Water Intake:** {ch2o} L")
+    st.write(f"**Activity Level:** {faf}")
+    st.write(f"**Diet Risk:** {diet_risk}")
+
+with col2:
+    st.subheader("🔮 Prediction")
+
+    if st.button("Predict Obesity Level"):
+        input_data = [[age, bmi, ch2o, faf, tue, diet_risk]]
+        result = model.predict(input_data)[0]
+
+        st.success(f"Predicted Category: **{result}**")
+
+        # Interpretation
+        if "Obese" in result:
+            st.error("⚠️ High Risk: Consider improving diet and activity level.")
+        elif "Overweight" in result:
+            st.warning("⚠️ Moderate Risk: Small lifestyle changes needed.")
+        else:
+            st.info("✅ Healthy Range: Keep maintaining your habits!")
+st.markdown("---")
+st.markdown("💡 **Insight:** High diet risk and low activity significantly " \
+"increase obesity probability.")
 def bmi_category(bmi):
     if bmi < 18.5:
         return "Underweight"
@@ -111,6 +146,8 @@ if analyze:
             st.warning("Improve diet and activity.")
         else:
             st.error("High risk. Take care.")
+
+
 
     # Comparison
     st.subheader("Comparison with Dataset")
