@@ -148,24 +148,71 @@ if analyze:
             st.error("High risk. Take care.")
 
     #calorie maintainance training 
-    st.subheader("🎯 Personalized Calorie Plan")
-    height_m = height / 100 
-    ideal_weight = 22 * (height_m ** 2)
+st.subheader("🎯 Personalized Calorie Plan")
 
-    bmr = 10 * weight + 6.25 * height - 5 * age + 5
-    maintenance_calories = bmr * 1.2
+height_m = height / 100
+ideal_weight = 22 * (height_m ** 2)
+bmr = 10 * weight + 6.25 * height - 5 * age + 5
+maintenance_calories = bmr * 1.2
+weight_diff = weight - ideal_weight
 
-    weight_diff = weight - ideal_weight
+if weight_diff > 2:
+    target_calories = maintenance_calories - 400
+    goal = "🔴 Calorie Deficit — Lose Weight"
+    goal_color = "#BA7517"
+    tips = [
+        "Reduce refined carbs and sugary drinks",
+        "Eat more protein to stay full longer",
+        "Aim for 30 min of activity daily",
+        "Track meals to avoid unconscious eating"
+    ]
+elif weight_diff < -2:
+    target_calories = maintenance_calories + 500
+    goal = "🔵 Calorie Surplus — Gain Weight"
+    goal_color = "#185FA5"
+    tips = [
+        "Add calorie-dense whole foods like nuts",
+        "Eat 5 - 6 smaller meals through the day",
+        "Include strength training 3x a week",
+        "Prioritize quality sleep for recovery"
+    ]
+else:
+    target_calories = maintenance_calories
+    goal = "🟢 Maintenance — Keep It Up"
+    goal_color = "#3B6D11"
+    tips = [
+        "Maintain consistent meal timing",
+        "Stay hydrated — aim for 2 - 3 L water/day",
+        "Keep activity level steady",
+        "Monitor weight weekly, not daily"
+    ]
 
-    if weight_diff > 2:
-        traget_calories = maintenance_calories - 500
-        goal = "🔴 Calories Deficit (Lose Weight)"
-    elif weight_diff < 2:
-        traget_calories = maintenance_calories + 500
-        goal = "🔵 Calories Surplus (Gain Weight) "
+# Metric cards
+c1, c2, c3, c4 = st.columns(4)
+c1.metric("BMI", f"{weight / (height_m**2):.1f}")
+c2.metric("Ideal Weight", f"{ideal_weight:.1f} kg")
+c3.metric("Your Weight", f"{weight} kg")
+c4.metric("BMR", f"{int(bmr)} kcal")
+
+st.markdown(f"**Goal:** {goal}")
+st.caption(f"Based on your current weight vs ideal weight of {ideal_weight:.1f} kg")
+
+col_a, col_b, col_c = st.columns(3)
+col_a.metric("Maintenance", f"{int(maintenance_calories)} kcal")
+col_b.metric("Target Calories", f"{int(target_calories)} kcal")
+col_c.metric("Daily Adjustment", f"{int(target_calories - maintenance_calories):+} kcal")
+
+progress = min(max(int((weight / ideal_weight) * 100), 0), 100)
+st.caption(f"Weight vs Ideal — Ideal: {ideal_weight:.1f} kg | You: {weight} kg ({progress}%)")
+st.progress(progress)
+
+st.markdown("**Recommendations**")
+col1, col2 = st.columns(2)
+for i, tip in enumerate(tips):
+    if i % 2 == 0:
+        col1.info(tip)
     else:
-        traget_calories = maintenance_calories
-        goal = "🟢 Maintenance"
+        col2.info(tip)
     
     st.write(f"**Ideal Weight:** {ideal_weight:.2f} kg")
     st.write(f"**Your Weight:** {weight} kg")
