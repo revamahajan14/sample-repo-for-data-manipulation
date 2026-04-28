@@ -169,7 +169,7 @@ if weight_diff > 2:
 elif weight_diff < -2:
     target_calories = maintenance_calories + 500
     goal = "🔵 Calorie Surplus — Gain Weight"
-    goal_color = "#185FA5"
+    goal_color = "#CFD7E0"
     tips = [
         "Add calorie-dense whole foods like nuts",
         "Eat 5 - 6 smaller meals through the day",
@@ -194,7 +194,7 @@ c2.metric("Ideal Weight", f"{ideal_weight:.1f} kg")
 c3.metric("Your Weight", f"{weight} kg")
 c4.metric("BMR", f"{int(bmr)} kcal")
 
-st.markdown(f"**Goal:** {goal}")
+
 st.caption(f"Based on your current weight vs ideal weight of {ideal_weight:.1f} kg")
 
 col_a, col_b, col_c = st.columns(3)
