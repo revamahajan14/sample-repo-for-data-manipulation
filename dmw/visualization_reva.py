@@ -12,7 +12,7 @@ df = pd.read_csv("cleaned.csv")
 
 st.set_page_config(page_title="Health Analyzer", layout="wide")
 print("model expects:" ,)
-st.title("💪 Obesity Risk Analyzer")
+st.title(" Obesity Risk Analyzer")
 st.markdown("Analyze how diet and lifestyle affect obesity risk")
 
 # Sidebar inputs
@@ -49,6 +49,13 @@ with col2:
 
     if st.button("Predict Obesity Level"):
         input_data = pd.DataFrame([[age, bmi, ch2o, faf, tue, diet_risk]] , columns = features )
+        input_dict = {features:0 for feature in features }
+        input_dict['Age'] = age
+        input_dict['BMI'] = bmi
+        input_dict['CH2O'] = ch2o
+        input_dict['FAF'] = faf
+        input_dict['TUE'] = tue
+        input_data = pd.DataFrame([input_dict])       
         result = model.predict(input_data)[0]
 
         st.success(f"Predicted Category: **{result}**")
@@ -81,13 +88,13 @@ if not analyze:
     st.subheader("Dataset Overview")
 
     fig1 = px.histogram(df, x="BMI", title="BMI Distribution")
-    st.plotly_chart(fig1, use_container_width=True)
+    st.plotly_chart(fig1, use_container_width=True, key = "overview_fig1")
 
     fig2 = px.scatter(df, x="Age", y="Weight", title="Age vs Weight")
-    st.plotly_chart(fig2, use_container_width=True)
+    st.plotly_chart(fig2, use_container_width=True, key = "overview_fig2")
 
     fig3 = px.histogram(df, x="NObeyesdad", title="Obesity Levels")
-    st.plotly_chart(fig3, use_container_width=True)
+    st.plotly_chart(fig3, use_container_width=True, key = "overview_fig3")
 
 # -----------------------------
 # AFTER ANALYZE
@@ -204,7 +211,7 @@ col_c.metric("Daily Adjustment", f"{int(target_calories - maintenance_calories):
 
 progress = min(max(int((weight / ideal_weight) * 100), 0), 100)
 st.caption(f"Weight vs Ideal — Ideal: {ideal_weight:.1f} kg | You: {weight} kg ({progress}%)")
-st.progress(progress)
+
 
 st.markdown("**Recommendations**")
 col1, col2 = st.columns(2)
@@ -220,7 +227,7 @@ for i, tip in enumerate(tips):
     st.write(f"**Recommended Daily Calories:** {int(target_calories)} kcal")
 
     progress = min(max(int((weight / ideal_weight) * 100), 0), 100)
-    st.progress(progress)
+    
 
     st.caption("Weight vs Ideal Weight Indicator")
     # Comparison
@@ -247,13 +254,13 @@ for i, tip in enumerate(tips):
     with st.expander("📊 View Dataset Analysis"):
 
         fig1 = px.histogram(df, x="BMI", title="BMI Distribution")
-        st.plotly_chart(fig1, use_container_width=True)
+        st.plotly_chart(fig1, use_container_width=True, key = "expander_fig1")
 
         fig2 = px.scatter(df, x="Age", y="Weight", title="Age vs Weight")
-        st.plotly_chart(fig2, use_container_width=True)
+        st.plotly_chart(fig2, use_container_width=True, key = "expander_fig2")
 
         fig3 = px.histogram(df, x="NObeyesdad", title="Obesity Levels")
-        st.plotly_chart(fig3, use_container_width=True)
+        st.plotly_chart(fig3, use_container_width=True, key = "expander_fig3")
         #theme
         st.markdown("""
         <style>
