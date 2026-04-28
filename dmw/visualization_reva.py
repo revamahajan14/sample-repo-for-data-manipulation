@@ -176,7 +176,7 @@ if analyze:
     progress = min(max(int((weight / ideal_weight) * 100), 0), 150)
     st.progress(progress)
 
-st.caption("Weight vs Ideal Weight Indicator")
+    st.caption("Weight vs Ideal Weight Indicator")
     # Comparison
     st.subheader("Comparison with Dataset")
 
