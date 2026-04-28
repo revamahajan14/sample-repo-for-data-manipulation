@@ -217,7 +217,7 @@ for i, tip in enumerate(tips):
     st.write(f"**Ideal Weight:** {ideal_weight:.2f} kg")
     st.write(f"**Your Weight:** {weight} kg")
     st.write(f"**Goal:** {goal}")
-    st.write(f"**Recommended Daily Calories:** {int(traget_calories)} kcal")
+    st.write(f"**Recommended Daily Calories:** {int(target_calories)} kcal")
 
     progress = min(max(int((weight / ideal_weight) * 100), 0), 100)
     st.progress(progress)
