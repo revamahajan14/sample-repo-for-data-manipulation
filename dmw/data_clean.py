@@ -1,12 +1,11 @@
-#20240802151 and #20240802131
-
+import joblib
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
-
+#20240802151
 # Load dataset
-df = pd.read_csv("ObesityDataSet_raw_and_data_sinthetic.csv")
+df = pd.read_csv(r'C:\Users\ishum\OneDrive\Desktop\data manipulation\dmw\ObesityDataSet_raw_and_data_sinthetic.csv')
 print("Initial shape:", df.shape)
 
 # Check basic info
@@ -52,6 +51,16 @@ for col in cat_cols:
 df.plot(x='Age', y='Height', style='o')
 plt.title("Age vs Height")
 plt.show()
+
+
+label_encoders = {}
+
+for col in df.select_dtypes(include='object').columns:
+    le = LabelEncoder()
+    df[col] = le.fit_transform(df[col])
+    label_encoders[col] = le
+
+joblib.dump(label_encoders, "encoders.pkl")
 
 # Final check
 print(df.info())
