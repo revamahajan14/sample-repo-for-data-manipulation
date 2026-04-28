@@ -72,7 +72,7 @@ if not analyze:
 
     fig_pie = px.pie(obesity_counts, names="Category", values="Count", title="Obesity Level Distribution")
     model = joblib.load("model.pkl")
-    accuracy = joblib.load("accuracy.pkl")
+    accuracy = joblib.load(r'C:\Users\ishum\OneDrive\Desktop\data manipulation\accuracy.pkl')
 
     st.subheader("📊 Model Performance")
     st.write(f"Accuracy: {accuracy * 100:.2f}%")
