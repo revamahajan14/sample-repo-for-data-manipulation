@@ -25,7 +25,6 @@ weight = st.sidebar.number_input("Weight (kg)", 30.0, 150.0, 70.0)
 faf = st.sidebar.number_input("Activity (0-7)", 0, 6, 2)
 ch2o = st.sidebar.number_input("Water Intake (L)", 1, 6, 3)
 tue = st.sidebar.number_input("Screen Time (0-24)", 0, 24, 2)
-diet_risk = st.sidebar.slider("Diet Risk Score", 0, 10, 4)
 
 analyze = st.sidebar.button("Analyze")
 
@@ -172,7 +171,7 @@ if analyze:
     st.write(f"**Goal:** {goal}")
     st.write(f"**Recommended Daily Calories:** {int(traget_calories)} kcal")
 
-    progress = min(max(int((weight / ideal_weight) * 100), 0), 150)
+    progress = min(max(int((weight / ideal_weight) * 100), 0), 100)
     st.progress(progress)
 
     st.caption("Weight vs Ideal Weight Indicator")
