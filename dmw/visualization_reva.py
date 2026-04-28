@@ -150,7 +150,6 @@ if analyze:
     #calorie maintainance training 
     st.subheader("🎯 Personalized Calorie Plan")
     st.write("DEBUG → Height input:", height)
-    st.write("DEBUG → Height in meters:", height_m)
     ideal_weight = 22 * (height ** 2)
 
     bmr = 10 * weight + 6.25 * (height * 100) - 5 * age + 5
