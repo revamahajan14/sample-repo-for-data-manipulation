@@ -149,22 +149,22 @@ if analyze:
 
     #calorie maintainance training 
     st.subheader("🎯 Personalized Calorie Plan")
-    st.write("DEBUG → Height input:", height)
-    ideal_weight = 22 * (height ** 2)
+    height_m = height / 100 
+    ideal_weight = 22 * (height_m ** 2)
 
-    bmr = 10 * weight + 6.25 * (height * 100) - 5 * age + 5
-    maintanance_calories = bmr * 1.2
+    bmr = 10 * weight + 6.25 * height - 5 * age + 5
+    maintenance_calories = bmr * 1.2
 
     weight_diff = weight - ideal_weight
 
     if weight_diff > 2:
-        traget_calories = maintanance_calories - 500
+        traget_calories = maintenance_calories - 500
         goal = "🔴 Calories Deficit (Lose Weight)"
     elif weight_diff < 2:
-        traget_calories = maintanance_calories + 500
+        traget_calories = maintenance_calories + 500
         goal = "🔵 Calories Surplus (Gain Weight) "
     else:
-        traget_calories = maintanance_calories
+        traget_calories = maintenance_calories
         goal = "🟢 Maintenance"
     
     st.write(f"**Ideal Weight:** {ideal_weight:.2f} kg")
