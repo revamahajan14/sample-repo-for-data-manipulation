@@ -4,7 +4,7 @@ import pandas as pd
 import joblib
 import plotly.express as px
 import plotly.graph_objects as go
-#20240802151
+
 model = joblib.load("model.pkl")
 features = joblib.load("features.pkl")
 df = pd.read_csv("cleaned.csv")
@@ -16,7 +16,7 @@ st.markdown(
 )
 
 st.sidebar.header("Enter Your Details")
-#20240802151
+
 age = st.sidebar.number_input("Age", 10, 80, 25)
 height = st.sidebar.number_input("Height (cm)", 130, 220, 170)
 weight = st.sidebar.number_input("Weight (kg)", 30.0, 150.0, 70.0)
@@ -28,7 +28,7 @@ ch2o = st.sidebar.number_input("Water Intake (1-8)", 1, 8, 3)
 tue = st.sidebar.number_input("Screen Time (0-12)", 0, 12, 2)
 
 analyze = st.sidebar.button("Analyze")
-#20240802151
+
 def bmi_category(bmi):
     if bmi < 18.5:
         return "Underweight"
@@ -38,7 +38,7 @@ def bmi_category(bmi):
         return "Overweight"
     else:
         return "Obese"
-#20240802151
+#20240802468
 if not analyze:
 
     st.subheader("Dataset Overview")
@@ -77,7 +77,7 @@ if not analyze:
     st.subheader("📊 Model Performance")
     st.write(f"Accuracy: {accuracy * 100:.2f}%")
     st.plotly_chart(fig_pie, use_container_width=True)
-#202040802151
+
 if analyze:
 
     bmi = weight / ((height / 100) ** 2)
@@ -205,7 +205,7 @@ if analyze:
         st.metric("Least Frequent BMI", f"{df['BMI'].value_counts().idxmin():.2f}")
 
     with st.expander("Dataset Analysis"):
-#20240802468
+
         c9, c10 = st.columns(2)
 
         with c9:
