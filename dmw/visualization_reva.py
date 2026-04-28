@@ -25,6 +25,7 @@ weight = st.sidebar.number_input("Weight (kg)", 30.0, 150.0, 70.0)
 faf = st.sidebar.number_input("Activity (0-7)", 0, 6, 2)
 ch2o = st.sidebar.number_input("Water Intake (L)", 1, 6, 3)
 tue = st.sidebar.number_input("Screen Time (0-24)", 0, 24, 2)
+diet_risk = st.sidebar.slider("Diet Risk Score", 0, 10, 4)
 
 analyze = st.sidebar.button("Analyze")
 
