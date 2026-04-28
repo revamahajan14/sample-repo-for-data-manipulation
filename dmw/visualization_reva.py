@@ -11,7 +11,7 @@ features = joblib.load("features.pkl")
 df = pd.read_csv("cleaned.csv")
 
 st.set_page_config(page_title="Health Analyzer", layout="wide")
-
+print("model expects:" ,)
 st.title("💪 Obesity Risk Analyzer")
 st.markdown("Analyze how diet and lifestyle affect obesity risk")
 
@@ -48,7 +48,7 @@ with col2:
     st.subheader("🔮 Prediction")
 
     if st.button("Predict Obesity Level"):
-        input_data = [[age, bmi, ch2o, faf, tue, diet_risk]]
+        input_data = pd.DataFrame([[age, bmi, ch2o, faf, tue, diet_risk]] , columns = features )
         result = model.predict(input_data)[0]
 
         st.success(f"Predicted Category: **{result}**")
@@ -147,8 +147,35 @@ if analyze:
         else:
             st.error("High risk. Take care.")
 
+    #calorie maintainance training 
+    st.subheader("🎯 Personalized Calorie Plan")
 
+    ideal_weight = 22 * (height ** 2)
 
+    bmr = 10 * weight + 6.25 * (height * 100) - 5 * age + 5
+    maintanance_calories = bmr * 1.2
+
+    weight_diff = weight - ideal_weight
+
+    if weight_diff > 2:
+        traget_calories = maintanance_calories - 500
+        goal = "🔴 Calories Deficit (Lose Weight)"
+    elif weight_diff < 2:
+        traget_calories = maintanance_calories + 500
+        goal = "🔵 Calories Surplus (Gain Weight) "
+    else:
+        traget_calories = maintanance_calories
+        goal = "🟢 Maintenance"
+    
+    st.write(f"**Ideal Weight:** {ideal_weight:.2f} kg")
+    st.write(f"**Your Weight:** {weight} kg")
+    st.write(f"**Goal:** {goal}")
+    st.write(f"**Recommended Daily Calories:** {int(target_calories)} kcal")
+
+    progress = min(max(int((weight / ideal_weight) * 100), 0), 150)
+    st.progress(progress)
+
+    st.caption("Weight vs Ideal Weight Indicator")
     # Comparison
     st.subheader("Comparison with Dataset")
 
