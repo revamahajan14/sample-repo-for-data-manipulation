@@ -48,7 +48,6 @@ with col2:
     st.subheader("🔮 Prediction")
 
     if st.button("Predict Obesity Level"):
-        input_data = pd.DataFrame([[age, bmi, ch2o, faf, tue, diet_risk]] , columns = features )
         input_dict = {features:0 for feature in features }
         input_dict['Age'] = age
         input_dict['BMI'] = bmi
